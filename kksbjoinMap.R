@@ -6,9 +6,11 @@ library(rnaturalearth)
 library(WDI)
 library(tigris)
 library(dplyr)
+library(leaflet.extras)
+
 
 kecamatan <- shapefile("~/idn/idn_admbnda_adm3_bps_2019.shp")
-kkpolygon2 <- read_excel("kkpolygon.xlsx")
+kkpolygon2 <- read_excel("KKDataAnalyst/kkpolygon.xlsx")
 
 kopken <- kkpolygon2 %>%
   filter(status == "KK")
@@ -24,8 +26,9 @@ binpal2 <- colorBin("Greens", sbjoin@data$avg.Net.Sales, 6, pretty = FALSE)
 
 kksbjoinMap <- leaflet()%>%
       setView(lat = -6.2088,
-              lng = 106.8456, zoom = 5)%>%
-      addProviderTiles("CartoDB") %>% 
+              lng = 106.8456, zoom = 10)%>%
+      addProviderTiles("CartoDB") %>%
+      addResetMapButton()%>%
            addPolygons(
                  data = kkjoin,
                  group = "KopiKenangan",
